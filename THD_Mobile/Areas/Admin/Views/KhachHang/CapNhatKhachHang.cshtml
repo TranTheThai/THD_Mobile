@@ -1,0 +1,37 @@
+﻿@model THD_Mobile.Models.KhachHang
+@{
+    ViewBag.Title = "Cập Nhật Khách Hàng";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="container mt-4">
+    <h2 class="text-center mb-4">@ViewBag.Title "@Model.HoTen"</h2>
+
+    <form method="post" action="@Url.Action("CapNhatKhachHang", "KhachHang")">
+        <input type="hidden" name="id" value="@Model.IdKhachHang"/>
+        <div class="mb-3">
+            <label for="hoten" class="form-label">Họ và tên:</label>
+            <input type="text" class="form-control" id="hoten" name="hoten" value="@Model.HoTen" required/>
+        </div>
+
+        <div class="mb-3">
+            <label for="tendangnhap" class="form-label">Tên đăng nhập:</label>
+            <input type="text" class="form-control" id="tendangnhap" name="tendangnhap" value="@Model.TenDangNhap" required/>
+        </div>
+        <div class="mb-3">
+            <label for="email" class="form-label">Email:</label>
+            <input type="text" class="form-control" id="email" name="email" value="@Model.Email"/>
+        </div>
+        <div class="mb-3">
+            <label for="diachi" class="form-label">Địa chỉ:</label>
+            <input type="text" class="form-control" id="diachi" name="diachi" value="@Model.DiaChi"/>
+        </div>
+        <div class="mb-3">
+            <label for="sdt" class="form-label">Số điện thoại:</label>
+            <input type="text" class="form-control" id="sdt" name="sdt" value="@Model.SDT"/>
+        </div>
+        <div class="text-center">
+            <button type="submit" class="btn btn-success">Cập nhật khách hàng</button>
+        </div>
+    </form>
+</div>

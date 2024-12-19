@@ -1,0 +1,54 @@
+﻿@model List<THD_Mobile.Models.SanPhamViewModel>
+@{
+    ViewBag.Title = "Sản Phẩm Theo Hãng";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+<main>
+    <h2 class="text-center mb-4">Quản Lý Sản Phẩm</h2>
+    <div class="row text-end" style="text-align: center;">
+        <a href="@Url.Action("ThemSanPham", "SanPham")" style="" class="btn btn-secondary">Thêm mới</a>
+    </div>
+    <div class="container">
+        <div class="row border-bottom pb-2" style="color: rgba(0,0,0,0.5); font-size: 18px;">
+            <div class="col-2">Ảnh Sản Phẩm</div>
+            <div class="col-3">Tên Sản Phẩm</div>
+            <div class="col-3">Tên Hãng</div>
+            <div class="col-1">Số Lượng</div>
+            <div class="col-2">Giá</div>
+            <div class="col-1">Thao Tác</div>
+        </div>
+
+        @foreach (var sp in Model)
+        {
+            <div class="row mb-2 border-bottom pb-2">
+                <!-- Cột 2: Ảnh sản phẩm -->
+                <div class="col-2">
+                    <img style="width: 100px; height: 100px;" src="@Url.Content(sp.Anh)" alt="Ảnh sản phẩm." />
+                </div>
+                <!-- Cột 3: Tên sản phẩm -->
+                <div class="col-3">
+                    <h6>@sp.TenSanPham</h6>
+                </div>
+                <!-- Cột 4: Tên HSX-->
+                <div class="col-3">
+                    <p>@sp.TenHangSanXuat</p>
+                </div>
+                <!-- Cột 3: Số lượng -->
+                <div class="col-1">
+
+                    <p>@sp.SoLuong</p>
+                </div>
+                <!-- Cột 4: Thành tiền -->
+                <div class="col-2">
+                    @string.Format("{0:N0} đ", sp.Gia)
+                </div>
+                <!-- Cột 5: Ngày thêm -->
+                <div class="col-1">
+                    <div class="row"><a href="@Url.Action("XoaSanPham", "SanPham", new {idSanPham = sp.IdSanPham})" style="margin: 15px 0; width: 80px;" type="button" class="btn btn-sm btn-danger" onclick="return confirm('Bạn có chắc chắn muốn xóa sản phẩm này không?');">Xoá</a></div>
+                    <div class="row"><a href="@Url.Action("ChinhSuaSanPham", "SanPham", new {id = sp.IdSanPham})" style="width: 80px;" type="button" class="btn btn-sm btn-success">Chỉnh Sửa</a></div>
+                </div>
+            </div>
+
+        }
+    </div>
+</main>

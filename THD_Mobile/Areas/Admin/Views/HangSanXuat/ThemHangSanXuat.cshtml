@@ -1,0 +1,30 @@
+﻿
+@{
+    ViewBag.Title = "Thêm Hãng Sản Xuất";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<main>
+    <form action="@Url.Action("postThemHangSanXuat", "HangSanXuat")" method="post" class="row" enctype="multipart/form-data">
+        <div class="col-12 mt-5">
+            <div class="col-12 text-center mt-2"><h1>@ViewBag.Title</h1></div>
+            <div class="row">
+                <table class="table table-bordered">
+                    <tr>
+                        <th><label for="tenhangsanxuat">Tên Hãng Sản Xuất:</label></th>
+                        <td><input style="width: 100%;" type="text" name="tenhangsanxuat" id="tenhangsanxuat" required /></td>
+                    </tr>
+                    <tr>
+                        <th><label for="thongtin">Thông tin hãng sản xuất:</label></th>
+                        <td><input style="width: 100%;" type="text" name="thongtin" id="thongtin" required /></td>
+                    </tr>
+                </table>
+            </div>
+            <div class="row">
+                <div class="col-12 text-center">
+                    <button type="submit" class="btn btn-success">Thêm mới</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</main>

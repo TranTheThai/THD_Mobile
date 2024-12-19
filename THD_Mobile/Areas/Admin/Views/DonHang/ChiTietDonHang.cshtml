@@ -1,0 +1,143 @@
+﻿@model THD_Mobile.Models.DonHangViewModel
+@{
+    ViewBag.Title = "Chi Tiết Đơn Hàng";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+<style>
+    .redHover:hover {
+        background-color: red;
+        color: #fff;
+    }
+</style>
+<main>
+    <h2 class="text-center mb-4">@ViewBag.Title</h2>
+
+    <div class="container">
+        <!-- Danh sách sản phẩm trong đơn hàng -->
+        <div class="row">
+            <div class="col-12">
+                <h4>Chi Tiết Đơn Hàng</h4>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Tên Sản Phẩm</th>
+                            <th>Đơn Giá</th>
+                            <th>Số Lượng</th>
+                            <th>Thành Tiền</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var chiTiet in Model.ChiTietDonHangs)
+                        {
+                            <tr>
+                                <td>@chiTiet.SanPham.TenSanPham</td>
+                                <td>@string.Format("{0:N0} đ", chiTiet.SanPham.Gia)</td>
+                                <td>@chiTiet.SoLuongSanPham</td>
+                                <td>@string.Format("{0:N0} đ", chiTiet.SanPham.Gia * chiTiet.SoLuongSanPham)</td>
+                            </tr>
+                        }
+                    <tr>
+                        <th>Tổng Tiền</th>
+                        <td></td>
+                        <td></td>
+                        <th>@string.Format("{0:N0} đ", Model.TongGia)</th>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- Thông tin đơn hàng -->
+        <div class="row">
+            <div class="col-12">
+                <h4>Thông tin đơn hàng</h4>
+                <table class="table table-bordered">
+                    <tr>
+                        <th>Mã Đơn Hàng</th>
+                        <td>@Model.IdDonHang</td>
+                    </tr>
+                    <tr>
+                        <th>Ngày Tạo</th>
+                        <td>@Model.NgayTao.ToString("dd/MM/yyyy HH:mm")</td>
+                    </tr>
+                    <tr>
+                        <th>Phương Thức Thanh Toán</th>
+                        <td>@Model.PhuongThucThanhToan</td>
+                    </tr>
+                    <tr>
+                        <th>Trạng Thái</th>
+                        <td>
+                            <!-- Dropdown chọn trạng thái -->
+                            <select id="TrangThaiDropdown" class="form-control" onchange="updateTrangThai()">
+                                <option value="Chờ Xác Nhận" @(Model.TrangThaiHoaDon == "Chờ Xác Nhận" ? "selected" : "")>Chờ Xác Nhận</option>
+                                <option value="Chờ Lấy Hàng" @(Model.TrangThaiHoaDon == "Chờ Lấy Hàng" ? "selected" : "")>Chờ Lấy Hàng</option>
+                                <option value="Đang Giao Hàng" @(Model.TrangThaiHoaDon == "Đang Giao Hàng" ? "selected" : "")>Đang Giao Hàng</option>
+                                <option value="Đã Giao" @(Model.TrangThaiHoaDon == "Đã Giao" ? "selected" : "")>Đã Giao</option>
+                                <option value="Trả Hàng" @(Model.TrangThaiHoaDon == "Trả Hàng" ? "selected" : "")>Trả Hàng</option>
+                                <option class="redHover" value="Đã Huỷ Đơn" @(Model.TrangThaiHoaDon == "Đã Huỷ Đơn" ? "selected" : "")>Đã Huỷ Đơn</option>
+                            </select>
+                        </td>
+                    </tr>
+                    
+                </table>
+            </div>
+        </div>
+
+
+
+        <!-- Thông tin khách hàng -->
+        <div class="row">
+            <div class="col-12">
+                <h4>Thông Tin Khách Hàng</h4>
+                <table class="table table-bordered">
+                    <tr>
+                        <th>Họ và Tên</th>
+                        <td>@Model.HoTenKhachHang</td>
+                    </tr>
+                    <tr>
+                        <th>Email</th>
+                        <td>@Model.EmailKhachHang</td>
+                    </tr>
+                    <tr>
+                        <th>Địa Chỉ</th>
+                        <td>@Model.DiaChiKhachHang</td>
+                    </tr>
+                    <tr>
+                        <th>Số Điện Thoại</th>
+                        <td>@Model.SDTKhachHang</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <!-- Thông tin thêm -->
+        <div class="row">
+            <div class="col-12 text-center">
+                <a href="@Url.Action("IndexDonHang", "DonHang")" class="btn btn-success">Quay lại</a>
+            </div>
+        </div>
+    </div>
+</main>
+@section Scripts {
+    <script>
+        function updateTrangThai() {
+            var trangThai = $('#TrangThaiDropdown').val();
+            var idDonHang = @Model.IdDonHang;
+
+            $.ajax({
+                url: '@Url.Action("CapNhatTrangThai", "DonHang")',
+                type: 'POST',
+                data: {
+                    IdDonHang: idDonHang,
+                    TrangThaiHoaDon: trangThai
+                },
+                success: function (response) {
+                    // Nếu thành công, cập nhật trạng thái hiển thị trên giao diện
+                    alert('Trạng thái đơn hàng đã được cập nhật!');
+                },
+                error: function () {
+                    alert('Có lỗi xảy ra khi cập nhật trạng thái đơn hàng.');
+                }
+            });
+        }
+    </script>
+}

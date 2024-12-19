@@ -1,0 +1,119 @@
+﻿@model THD_Mobile.Models.SanPham
+@{
+    ViewBag.Title = "ChiTietSanPham";
+    Layout = "~/Areas/Customer/Views/Shared/_LayoutCustomer.cshtml";
+}
+<style>
+</style>
+
+<main style="margin-top: 80px;">
+    <div class="row">
+        <div class="col-4 text-center p-3d-flex justify-content-center align-items-center">
+            <div class="mb-2">
+                <img style="width: 250px; height: 250px;" class="img-product" src="@Url.Content(Model.Anh)" alt="Ảnh sản phẩm." />
+            </div>
+            <div class=" pull-right">
+                <button type="button" class="btn btn-outline-danger"><i class="fa-regular fa-heart"> </i> Yêu thích</button>
+            </div>
+        </div>
+        <div class="col-8">
+            <div class="row">
+                <h1>@Model.TenSanPham</h1>
+            </div>
+            <div class="dropdown-divider"></div>
+            <div class="row" style="font-size: 25px; color: #D0011B;">
+                <p>@string.Format("{0:N0} đ", @Model.Gia)</p>
+            </div>
+            <div class="dropdown-divider"></div>
+            <div class="row">
+                <p style="color: rgba(0,0,0,0.5)">Chi Tiết Sản Phẩm:</p>
+            </div>
+            <div class="row">
+                <div class="col-3">
+                    <div class="row">Kích thước:</div>
+                    <div class="row">Bộ nhớ:</div>
+                    <div class="row">Dung lượng pin:</div>
+                </div>
+                <div class="col-9">
+                    <div class="row">1500x270mm</div>
+                    <div class="row">256gb</div>
+                    <div class="row">20.000mAh</div>
+                </div>
+            </div>
+            <div class="dropdown-divider"></div>
+            <div class="quantity-container row">
+                <div class="col-2" ">Số Lượng</div>
+                <div class="col-10 quantity-input">
+                    <button type="button" style="font-size: 20px;" class="btn btn-light" id="decrease">-</button>
+                    <input type="hidden" id="idSanPham" name="idSanPham" value="@Model.IdSanPham" />
+                    <input type="number" id="quantity" name="SoLuongSanPham" value="1" min="1">
+                    <button type="button" style="font-size: 20px;" class="btn btn-light" id="increase">+</button>
+                    <span class="stock-info">@Model.SoLuong sản phẩm có sẵn</span>
+                </div>
+            </div>
+            <div class="dropdown-divider"></div>
+            <div class="row">
+                <button onclick="muaSanPham(event);" id="btnMuaNgay" style="margin-right: 20px;" class="btn btn-success">Mua ngay</button>
+                <form action="@Url.Action("ThemVaoGioHang", "GioHang")" method="post">
+                    <!-- Truyền IdSanPham -->
+                    <input type="hidden" name="IdSanPham" value="@Model.IdSanPham" />
+                    <!-- Input số lượng sẽ gửi theo form -->
+                    <input type="hidden" id="hiddenQuantity" name="SoLuongSanPham" value="1" />
+                    <button onclick="updateHiddenQuantity(); showToast();" type="submit" class="btn btn-outline-dark"><i class="fas fa-shopping-cart"></i>Thêm vào giỏ hàng </button>
+                    @*onclick="showToast()"*@
+                </form>
+            </div>
+        </div>
+    </div>
+</main>
+<script>
+    // Tăng/giảm số lượng
+    document.getElementById("increase").onclick = function () {
+        let quantity = document.getElementById("quantity");
+        quantity.value = parseInt(quantity.value) + 1;
+    };
+
+    document.getElementById("decrease").onclick = function () {
+        let quantity = document.getElementById("quantity");
+        if (parseInt(quantity.value) > 1) {
+            quantity.value = parseInt(quantity.value) - 1;
+        }
+    };
+
+    // Cập nhật giá trị số lượng vào input ẩn khi bấm nút submit
+    function updateHiddenQuantity() {
+        let quantity = document.getElementById("quantity").value;
+        document.getElementById("hiddenQuantity").value = quantity;
+    }
+</script>
+@section Scripts {
+    <script>
+        function muaSanPham(event) {
+    event.preventDefault(); // Ngừng form submit mặc định
+
+    var quantity = $('#quantity').val();    // Số lượng sản phẩm
+    var idSanPham = $('#idSanPham').val();  // ID của sản phẩm
+
+    $.ajax({
+        url: '@Url.Action("MuaChiTietSanPham", "MuaHang")',  // Đường dẫn đến action xử lý
+        type: 'POST',  // Phương thức POST
+        data: {
+            IdSanPham: idSanPham,  // Truyền ID sản phẩm
+            SoLuongSanPham: quantity  // Truyền số lượng sản phẩm
+        },
+        success: function (response) {
+            if (response.success) {
+                alert("Mua thành công!");
+                window.location.href = response.redirectUrl; // Điều hướng đến trang xác nhận đơn hàng nếu cần
+            } else {
+                alert(response.message); // Hiển thị thông báo lỗi nếu có
+            }
+        },
+        error: function () {
+            alert("Có lỗi xảy ra khi mua sản phẩm!");
+        }
+    });
+}
+
+    </script>
+}

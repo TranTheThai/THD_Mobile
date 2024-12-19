@@ -1,0 +1,136 @@
+﻿@model List<THD_Mobile.Models.GioHangViewModel>
+@{
+    ViewBag.Title = "IndexGioHang";
+    Layout = "~/Areas/Customer/Views/Shared/_LayoutCustomer.cshtml";
+}
+<style>
+    .number-input {
+        display: flex;
+        align-items: center;
+    }
+
+        .number-input input {
+            width: 68px;
+            height: 30px;
+            border-radius: 0;
+            text-align: center;
+        }
+
+        .number-input button {
+            width: 30px;
+            height: 30px;
+            font-size: 18px;
+            border-radius: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+</style>
+
+<main>
+    <h2 class="text-center mb-4">Giỏ Hàng Của Bạn</h2>
+    <form action="@Url.Action("MuaNhieuSanPham", "MuaHang")" method="post">
+        <div class="container">
+            <div class="row border-bottom pb-2" style="color: rgba(0,0,0,0.5); font-size: 18px;">
+                <div class="col-1">Chọn</div>
+                <div class="col-3">Tên Sản Phẩm</div>
+                <div class="col-2">Đơn Giá</div>
+                <div class="col-2">Số Lượng</div>
+                <div class="col-2">Số Tiền</div>
+                <div class="col-1">Ngày Thêm</div>
+                <div class="col-1">Thao tác</div>
+            </div>
+
+            @foreach (var item in Model)
+            {
+                <div class="row mb-2 border-bottom pb-2">
+                    <!-- Cột 1: Chọn sản phẩm -->
+                    <div class="text-center col-1">
+                        <input style="height: 100%;" type="checkbox" name="selectedItems" value="@item.IdSanPham">
+                    </div>
+                    <div class="col-3">
+                        <div class="row">
+                            <div class="col-5">
+                                <img style="width: 100px; height: 100px;" class="img-product" src="@Url.Content(item.Anh)" alt="Ảnh sản phẩm." />
+                            </div>
+                            <div class="col-7">
+                                <a href="@Url.Action("ChiTietSanPham", "SanPham", new {IdSP = item.IdSanPham})">@item.TenSanPham</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Cột 3: Đơn giá -->
+                    <div class="col-2">
+                        @string.Format("{0:N0} đ", item.Gia)
+                    </div>
+
+                    <!-- Cột 4: Số lượng -->
+                    <div class="col-2">
+                        @*<input class="quantity-input" type="number" id="quantity" name="quantity_@item.IdSanPham" value="@item.SoLuongSanPham" min="1">*@
+                        <div class="number-input">
+                            <button id="decrement_@item.IdSanPham" class="btn btn-outline-secondary">-</button>
+                            <input type="number" id="quantity_@item.IdSanPham" max="100" class="form-control" name="quantity_@item.IdSanPham" value="@item.SoLuongSanPham" min="1">
+                            <button id="increment_@item.IdSanPham" class="btn btn-outline-secondary">+</button>
+                        </div>
+
+                    </div>
+
+                    <!-- Cột 5: Thành tiền -->
+                    <div class="col-2">
+                        @string.Format("{0:N0} đ", item.ThanhTien)
+                    </div>
+
+                    <!-- Cột 6: Ngày thêm -->
+                    <div class="col-1">
+                        @(item.NgayThem?.ToString("dd/MM/yyyy") ?? "N/A")
+                    </div>
+
+                    <!-- Cột 7: Thao tác -->
+                    <div class="col-1">
+                        <div class="row">
+                            <a href="@Url.Action("XoaSanPhamGioHang", "GioHang", new {idSanPham = item.IdSanPham})" style=" margin: 50px auto 0; width: 80px;" type="button" class="btn btn-sm btn-danger" onclick="return confirm('Bạn có chắc chắn muốn xóa sản phẩm này khỏi giỏ hàng không?');"><i style="font-size: 15px;" class="fa-solid fa-trash"></i></a>
+                        </div>
+                    </div>
+                </div>
+            }
+            @if (ViewBag.ErrorMessage != null)
+            {
+                <div class="alert alert-danger">@ViewBag.ErrorMessage</div>
+            }
+
+            <!-- Nút Đặt Hàng -->
+            <div class="row mt-4">
+                <div class="col-12 text-center">
+                    <button type="submit" class="btn btn-success">Đặt Hàng</button>
+                    <a href="@Url.Action("Index", "User")" class="btn btn-outline-dark">Trang Chủ</a>
+                </div>
+            </div>
+        </div>
+    </form>
+</main>
+<script>
+    document.querySelectorAll('.number-input').forEach(inputGroup => {
+        const decrementButton = inputGroup.querySelector('button:nth-child(1)');
+        const incrementButton = inputGroup.querySelector('button:nth-child(3)');
+        const quantityInput = inputGroup.querySelector('input[type="number"]');
+
+        // Ngăn chặn hành vi mặc định của nút để không reload trang
+        decrementButton.addEventListener('click', (event) => {
+            event.preventDefault();
+            let currentValue = parseInt(quantityInput.value, 10) || 0;
+            if (currentValue > parseInt(quantityInput.min, 10)) {
+                quantityInput.value = currentValue - 1;
+            }
+        });
+
+        incrementButton.addEventListener('click', (event) => {
+            event.preventDefault();
+            let currentValue = parseInt(quantityInput.value, 10) || 0;
+            if (currentValue < parseInt(quantityInput.max, 10)) {
+                quantityInput.value = currentValue + 1;
+            }
+        });
+    });
+
+</script>
+

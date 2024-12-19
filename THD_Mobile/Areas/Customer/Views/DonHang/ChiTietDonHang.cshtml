@@ -1,0 +1,110 @@
+﻿@model THD_Mobile.Models.DonHangViewModel
+@{
+    ViewBag.Title = "Chi Tiết Đơn Đặt Hàng";
+    Layout = "~/Areas/Customer/Views/Shared/_LayoutCustomer.cshtml";
+}
+
+<style>
+    .redHover:hover {
+        background-color: red;
+        color: #fff;
+    }
+</style>
+<main>
+    <h2 class="text-center mb-4 mt-4" style="font-weight: 700;">@ViewBag.Title</h2>
+
+    <div class="container">
+        <!-- Danh sách sản phẩm trong đơn hàng -->
+        <div class="row">
+            <div class="col-12">
+                <h4>Chi Tiết Đơn Hàng</h4>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Tên Sản Phẩm</th>
+                            <th>Đơn Giá</th>
+                            <th>Số Lượng</th>
+                            <th>Thành Tiền</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var chiTiet in Model.ChiTietDonHangs)
+                        {
+                            <tr>
+                                <td>@chiTiet.SanPham.TenSanPham</td>
+                                <td>@string.Format("{0:N0} đ", chiTiet.SanPham.Gia)</td>
+                                <td>@chiTiet.SoLuongSanPham</td>
+                                <td>@string.Format("{0:N0} đ", chiTiet.SanPham.Gia * chiTiet.SoLuongSanPham)</td>
+                            </tr>
+                        }
+                        <tr>
+                            <th>Tổng Tiền</th>
+                            <td></td>
+                            <td></td>
+                            <th>@string.Format("{0:N0} đ", Model.TongGia)</th>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- Thông tin đơn hàng -->
+        <div class="row">
+            <div class="col-12">
+                <h4>Thông tin đơn hàng</h4>
+                <table class="table table-bordered">
+                    <tr>
+                        <th>Mã Đơn Hàng</th>
+                        <td>@Model.IdDonHang</td>
+                    </tr>
+                    <tr>
+                        <th>Ngày Tạo</th>
+                        <td>@Model.NgayTao.ToString("dd/MM/yyyy HH:mm")</td>
+                    </tr>
+                    <tr>
+                        <th>Phương Thức Thanh Toán</th>
+                        <td>@Model.PhuongThucThanhToan</td>
+                    </tr>
+                    <tr>
+                        <th>Trạng Thái</th>
+                        <th style="color: red;">@Model.TrangThaiHoaDon</th>
+                    </tr>
+
+                </table>
+            </div>
+        </div>
+
+
+
+        <!-- Thông tin khách hàng -->
+        <div class="row">
+            <div class="col-12">
+                <h4>Thông Tin Khách Hàng</h4>
+                <table class="table table-bordered">
+                    <tr>
+                        <th>Họ và Tên</th>
+                        <td>@Model.HoTenKhachHang</td>
+                    </tr>
+                    <tr>
+                        <th>Email</th>
+                        <td>@Model.EmailKhachHang</td>
+                    </tr>
+                    <tr>
+                        <th>Địa Chỉ</th>
+                        <td>@Model.DiaChiKhachHang</td>
+                    </tr>
+                    <tr>
+                        <th>Số Điện Thoại</th>
+                        <td>@Model.SDTKhachHang</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <!-- Thông tin thêm -->
+        <div class="row">
+            <div class="col-12 text-center">
+                <a href="@Url.Action("IndexDonHang", "DonHang")" class="btn btn-success">Quay lại</a>
+            </div>
+        </div>
+    </div>
+</main>

@@ -1,0 +1,24 @@
+﻿@model THD_Mobile.Models.HangSanXuat
+@{
+    ViewBag.Title = "Cập Nhật Hãng Sản Xuất";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="container mt-4">
+    <h2 class="text-center mb-4">@ViewBag.Title "@Model.TenHangSanXuat"</h2>
+
+    <form method="post" action="@Url.Action("ChinhSuaHangSanXuat", "HangSanXuat")">
+        <input type="hidden" name="idHSX" value="@Model.IdHangSanXuat" />
+        <div class="mb-3">
+            <label for="tenhangsanxuat" class="form-label">Tên Hãng Sản Xuất:</label>
+            <input type="text" class="form-control" id="tenhangsanxuat" name="tenhangsanxuat" value="@Model.TenHangSanXuat" required />
+        </div>
+        <div class="mb-3">
+            <label for="thongtin" class="form-label">Thông tin:</label>
+            <input type="text" class="form-control" id="thongtin" name="thongtin" value="@Model.ThongTin" required />
+        </div>
+        <div class="text-center">
+            <button type="submit" class="btn btn-success">Cập nhật hãng sản xuất</button>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,106 @@
+﻿@model THD_Mobile.Models.DonHangViewModel
+@{
+    ViewBag.Title = "Xác Nhận Đơn Hàng";
+    Layout = "~/Areas/Customer/Views/Shared/_LayoutCustomer.cshtml";
+}
+
+<main>
+    <h2 class="text-center mb-4">Xác Nhận Đơn Hàng</h2>
+
+    <div class="container">
+        <!-- Thông tin đơn hàng -->
+        <div class="row">
+            <div class="col-12">
+                <h4>Thông tin đơn hàng</h4>
+                <table class="table table-bordered">
+                    <tr>
+                        <th>Mã Đơn Hàng</th>
+                        <td>@Model.IdDonHang</td>
+                    </tr>
+                    <tr>
+                        <th>Ngày Tạo</th>
+                        <td>@Model.NgayTao.ToString("dd/MM/yyyy HH:mm")</td>
+                    </tr>
+                    <tr>
+                        <th>Phương Thức Thanh Toán</th>
+                        <td>@Model.PhuongThucThanhToan</td>
+                    </tr>
+                    <tr>
+                        <th>Trạng Thái</th>
+                        <td>@Model.TrangThaiHoaDon</td>
+                    </tr>
+                    <tr>
+                        <th>Tổng Tiền</th>
+                        <td>@string.Format("{0:N0} đ", Model.TongGia)</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <!-- Danh sách sản phẩm trong đơn hàng -->
+        <div class="row">
+            <div class="col-12">
+                <h4>Chi Tiết Đơn Hàng</h4>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Tên Sản Phẩm</th>
+                            <th>Đơn Giá</th>
+                            <th>Số Lượng</th>
+                            <th>Thành Tiền</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var chiTiet in Model.ChiTietDonHangs)
+                        {
+                            <tr>
+                                <td>
+                                    <div class="row">
+                                        <div class="col-4"><img style="width: 100px; height: 100px;" src="@Url.Content(@chiTiet.AnhSP)" alt="Ảnh sản phẩm."/></div>
+                                        <div class="col-8">@chiTiet.SanPham.TenSanPham</div>
+                                    </div>
+                                </td>
+                                <td>@string.Format("{0:N0} đ", chiTiet.SanPham.Gia)</td>
+                                <td>@chiTiet.SoLuongSanPham</td>
+                                <td>@string.Format("{0:N0} đ", chiTiet.SanPham.Gia * chiTiet.SoLuongSanPham)</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Thông tin khách hàng -->
+        <div class="row">
+            <div class="col-12">
+                <h4>Thông Tin Khách Hàng</h4>
+                <table class="table table-bordered">
+                    <tr>
+                        <th>Họ và Tên</th>
+                        <td>@Model.HoTenKhachHang</td>
+                    </tr>
+                    <tr>
+                        <th>Email</th>
+                        <td>@Model.EmailKhachHang</td>
+                    </tr>
+                    <tr>
+                        <th>Địa Chỉ</th>
+                        <td>@Model.DiaChiKhachHang</td>
+                    </tr>
+                    <tr>
+                        <th>Số Điện Thoại</th>
+                        <td>@Model.SDTKhachHang</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <!-- Thông tin thêm -->
+        <div class="row">
+            <div class="col-12 text-center">
+                <a href="@Url.Action("HuyDonHang", "MuaHang", new {id = Model.IdDonHang})" class="btn btn-primary">Quay lại</a>
+                <a href="@Url.Action("Index", "User", new { id = Model.IdDonHang })" class="btn btn-success">Xác Nhận</a>
+            </div>
+        </div>
+    </div>
+</main>

@@ -1,0 +1,50 @@
+﻿@model List<THD_Mobile.Models.HangSanXuat>
+@{
+    ViewBag.Title = "ThemSanPham";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<main>
+    <form action="@Url.Action("ThemSanPham", "SanPham")" method="post" class="row" enctype = "multipart/form-data">
+        <div class="col-12 mt-5">
+            <div class="col-12 text-center mt-2"><h1>Thêm Sản Phẩm</h1></div>
+            <div class="row">
+                <table class="table table-bordered">
+                    <tr>
+                        <th><label for="tensanpham">Tên sản phẩm:</label></th>
+                        <td><input style="width: 100%;" type="text" name="tensanpham" id="tensanpham" required /></td>
+                    </tr>
+                    <tr>
+                        <th><label for="giasanpham">Giá sản phẩm:</label></th>
+                        <td><input style="width: 100%;" type="text" name="giasanpham" id="giasanpham" required /></td>
+                    </tr>
+                    <tr>
+                        <th><label for="soluong">Số lượng:</label></th>
+                        <td><input style="width: 100%;" type="text" name="soluong" id="soluong" required /></td>
+                    </tr>
+                    <tr>
+                        <th><label for="hangsanxuat">Hãng sản xuất:</label></th>
+                        <td>
+                            <select id="hangsanxuat" name="hangsanxuat" required>
+                                <option disabled selected><p>>>Chọn Hãng Sản Xuất<<</p></option>
+                                @foreach (var hsx in Model)
+                                {
+                                    <option value="@hsx.IdHangSanXuat">@hsx.TenHangSanXuat</option>
+                                }
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><label for="anh">Ảnh sản phẩm:</label></th>
+                        <td><input type="file" name="anh" id="anh" /></td>
+                    </tr>
+                </table>
+            </div>
+            <div class="row">
+                <div class="col-12 text-center">
+                    <button type="submit" class="btn btn-success">Thêm mới</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</main>

@@ -1,0 +1,51 @@
+* {
+    box-sizing: border-box;
+}
+.main-header {
+    background-color: #C0EB6A;
+    border-radius: 25px 0 25px;
+}
+.banner {
+    margin-top: -15px;
+}
+.img-banner {
+    width: 100%;
+    height: auto;
+}
+.img-product {
+    margin: 15px auto;
+}
+.wid-product {
+    flex-direction: column;
+    margin-bottom: 15px !important;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border-radius: 15px;
+}
+.widcontent {
+    width: 1200px;
+    margin: auto;
+}
+/* Kiểu cho toast notification */
+.toast {
+    visibility: hidden; /* Ẩn mặc định */
+    min-width: 250px;
+    margin-left: -125px; /* Căn giữa toast */
+    background-color: rgb(192, 235, 106);/* Màu nền xanh */
+    color: #000;
+    text-align: center;
+    border-radius: 2px;
+    padding: 16px;
+    position: fixed; /* Đặt vị trí cố định */
+    z-index: 10; /* Đảm bảo toast nằm trên cùng */
+    right: 50px;
+    top: 100px; /* Hiển thị ở phía dưới màn hình */
+    font-size: 17px;
+    opacity: 0; /* Ban đầu toast sẽ trong suốt */
+    transition: opacity 0.5s ease-out; /* Hiệu ứng fade-out */
+}
+
+/* Kiểu khi toast hiển thị */
+.toast.show {
+    visibility: visible;
+    opacity: 1; /* Toast hiển thị với độ mờ rõ ràng */
+}

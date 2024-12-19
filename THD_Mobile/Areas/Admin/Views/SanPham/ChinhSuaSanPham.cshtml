@@ -1,0 +1,53 @@
+﻿@model THD_Mobile.Models.SanPhamViewModel
+@{
+    ViewBag.Title = "ChinhSuaSanPham";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+
+
+<main>
+    @using (Html.BeginForm("ChinhSuaSanPham", "SanPham", FormMethod.Post, new { enctype = "multipart/form-data"}))
+    {
+        @Html.AntiForgeryToken()
+        <div class="col-12 mt-5">
+            <div class="col-12 text-center mt-2"><h1>Chỉnh Sửa Sản Phẩm</h1></div>
+            <div class="row">
+                <table class="table table-bordered">
+                    <input type="hidden" name="idSP" value="@Model.IdSanPham" />
+
+                    <tr>
+                        @Html.LabelFor(model => model.TenSanPham, "Tên Sản Phẩm")
+                        @Html.TextBoxFor(model => model.TenSanPham, new { @class = "form-control", required = "required" })
+                    </tr>
+                    <tr>
+                        @Html.LabelFor(model => model.Gia, "Giá Sản Phẩm")
+                        @Html.TextBoxFor(model => model.Gia, new { @class = "form-control", required = "required" })
+                    </tr>
+                    <tr>
+                        @Html.LabelFor(model => model.SoLuong, "Số Lượng Sản Phẩm")
+                        @Html.TextBoxFor(model => model.SoLuong, new { @class = "form-control", required = "required" })
+                    </tr>
+                    <tr>
+                        @Html.LabelFor(model => model.IdHangSanXuat, "Chọn Hãng Sản Xuất")
+                        @Html.DropDownListFor(model => model.IdHangSanXuat, (SelectList)ViewBag.HangSanXuatList, "Chọn Hãng", new { @class = "form-control" })
+                    </tr>
+                    <hr style="border: 1px solid #ccc; width: 80%;" />
+                    <tr>
+                        <th>
+                            <label for="anh">Ảnh sản phẩm (chọn ảnh mới cần cập nhật):</label><input type="file" name="anh" id="anh" />
+                            <p style="color: red;">@ViewBag.ErrorMessage</p>
+                        </th>
+                        <td><img style="width:250px; height:250px;" src="@Url.Content(Model.Anh)" alt="Ảnh sản phẩm" /></td>
+                    </tr>
+                </table>
+            </div>
+            <div class="row">
+                <div class="col-12 text-center">
+                    <button type="submit" class="btn btn-success">Cập nhật</button>
+                    <a href="@Url.Action("Index", "SanPham")" class="btn btn-danger">Huỷ</a>
+                </div>
+            </div>
+        </div>
+    }
+</main>

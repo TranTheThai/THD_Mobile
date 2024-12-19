@@ -1,0 +1,24 @@
+﻿
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+<style>
+    .overlay-title {
+        position: absolute; /* Đặt vị trí tuyệt đối dựa vào container cha */
+        top: 0; /* Căn giữa theo chiều dọc */
+        left: 50%; /* Căn giữa theo chiều ngang */
+        transform: translate(-50%); /* Điều chỉnh để căn giữa hoàn hảo */
+        color: black; /* Màu chữ */
+        z-index: 1; /* Đặt thứ tự cao hơn hình ảnh */
+        font-weight: 700;
+        font-size: 50px;
+        width: 100%;
+        text-align: center;
+    }
+</style>
+<main>
+    <div style="position: relative;" class="row">
+        <h1 class="overlay-title" style="">Admin THD Mobile</h1>
+        <img style="width: 100%; height: auto;" src="~/Libs/dist/img/Logo_THD.jpg" />
+    </div>
+</main>

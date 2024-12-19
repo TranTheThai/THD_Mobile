@@ -1,0 +1,50 @@
+﻿@model List<THD_Mobile.Models.KhachHang>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+<main>
+    <h2 class="text-center mb-4">Quản Lý Sản Phẩm</h2>
+    <div class="container">
+        <div class="row border-bottom pb-2" style="color: rgba(0,0,0,0.5); font-size: 18px;">
+            <div class="col-2">Tên Khách Hàng</div>
+            <div class="col-2">Tên Đăng Nhập</div>
+            <div class="col-3">Email</div>
+            <div class="col-2">Số Điện Thoại</div>
+            <div class="col-2">Địa Chỉ</div>
+            <div class="col-1">Thao Tác</div>
+        </div>
+
+        @foreach (var kh in Model)
+        {
+            <div class="row mb-2 border-bottom pb-2">
+                <!-- Cột 2: Ảnh sản phẩm -->
+                <div class="col-2">
+                    <h6>@kh.HoTen</h6>
+                </div>
+                <!-- Cột 3: Tên sản phẩm -->
+                <div class="col-2">
+                    <p>@kh.TenDangNhap</p>
+                </div>
+                <!-- Cột 4: Tên HSX-->
+                <div class="col-3">
+                    <p>@kh.Email</p>
+                </div>
+                <!-- Cột 3: Số lượng -->
+                <div class="col-2">
+                    <p>@kh.SDT</p>
+                </div>
+                <!-- Cột 4: Thành tiền -->
+                <div class="col-2">
+                    <p>@kh.DiaChi</p>
+                </div>
+                <!-- Cột 5: Ngày thêm -->
+                <div class="col-1">
+                    <div class="row"><a href="@Url.Action("XoaKhachHang", "KhachHang", new {idKhachHang = kh.IdKhachHang})" style="margin: 15px 0; width: 80px;" type="button" class="btn btn-sm btn-danger" onclick="return confirm('Bạn có chắc chắn muốn xóa khách hàng này không?');">Xoá</a></div>
+                    <div class="row"><a href="@Url.Action("CapNhatKhachHang", "KhachHang", new {id = kh.IdKhachHang})" style="width: 80px;" type="button" class="btn btn-sm btn-success">Chỉnh Sửa</a></div>
+                </div>
+            </div>
+
+        }
+    </div>
+</main>

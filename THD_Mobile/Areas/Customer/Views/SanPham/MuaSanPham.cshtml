@@ -1,0 +1,42 @@
+﻿
+@{
+    ViewBag.Title = "MuaSanPham";
+    Layout = "~/Areas/Customer/Views/Shared/_LayoutCustomer.cshtml";
+}
+
+<main>
+    <div style="background: #ccc; text-align: center; border-radius: 0 0 15px 15px;" class="row text-center">
+        <h1 style="line-height: 70px; width: 100%; font-size: 40px;">Thanh toán</h1>
+    </div>
+    <div class="container mt-4">
+        <h2 class="text-center mb-4"></h2>
+
+        <form method="post" action="@Url.Action("CapNhatKhachHang", "KhachHang")">
+            <input type="hidden" name="id" value="" />
+            <div class="mb-3">
+                <label for="hoten" class="form-label">Họ và tên:</label>
+                <input type="text" class="form-control" id="hoten" name="hoten" value="" required />
+            </div>
+
+            <div class="mb-3">
+                <label for="tendangnhap" class="form-label">Tên đăng nhập:</label>
+                <input type="text" class="form-control" id="tendangnhap" name="tendangnhap" value="" required />
+            </div>
+            <div class="mb-3">
+                <label for="email" class="form-label">Email:</label>
+                <input type="text" class="form-control" id="email" name="email" value="" />
+            </div>
+            <div class="mb-3">
+                <label for="diachi" class="form-label">Địa chỉ:</label>
+                <input type="text" class="form-control" id="diachi" name="diachi" value="" />
+            </div>
+            <div class="mb-3">
+                <label for="sdt" class="form-label">Số điện thoại:</label>
+                <input type="text" class="form-control" id="sdt" name="sdt" value="" />
+            </div>
+            <div class="text-center">
+                <button type="submit" class="btn btn-success">Cập nhật khách hàng</button>
+            </div>
+        </form>
+    </div>
+</main>

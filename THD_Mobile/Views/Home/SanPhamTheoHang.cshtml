@@ -1,0 +1,104 @@
+﻿@model List<THD_Mobile.Models.SanPham>
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<main>
+    <!-- Content Header (Page header) -->
+    <div class="row">
+        <div class="content-header widcontent">
+            <div class="container-fluid banner">
+                <img class="img-banner" src="~/Libs/dist/img/Logo/Banner.jpg"></img>
+            </div><!-- /.container-fluid -->
+        </div>
+    </div>
+    <!-- /.content-header -->
+    @{ #region DANH MUC HANG SAN XUAT}
+    <!-- Small boxes (Stat box) -->
+    <div class="row">
+        <!-- Apple -->
+        <div class="col-lg-3 col-6">
+            <a href="@Url.Action("SanPhamTheoHang", "Home", new {idHang = 1})">
+                <div class="small-box">
+                    <div class="row align-items-center">
+                        <div class="col-8" style="text-align: center; color: black;">
+                            <h3>Apple</h3>
+                        </div>
+                        <div class="col-4">
+                            <img src="~/Libs/dist/img/Logo/Apple.png" width="80" height="80" style="padding: 10px;" />
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <!-- Samsung -->
+        <div class="col-lg-3 col-6">
+            <a href="@Url.Action("SanPhamTheoHang", "Home", new {idHang = 2})">
+                <div class="small-box">
+                    <div class="row align-items-center">
+                        <div class="col-8" style="text-align: center; color: black;">
+                            <h3>Samsung</h3>
+                        </div>
+                        <div class="col-4">
+                            <img src="~/Libs/dist/img/Logo/Samsung.png" width="80" height="80" style="padding: 10px;" />
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <!-- Xiaomi -->
+        <div class="col-lg-3 col-6">
+            <a href="@Url.Action("SanPhamTheoHang", "Home", new {idHang = 3})">
+                <div class="small-box">
+                    <div class="row align-items-center">
+                        <div class="col-8" style="text-align: center">
+                            <h3 style="color: orangered">Xiaomi</h3>
+                        </div>
+                        <div class="col-4">
+                            <img src="~/Libs/dist/img/Logo/Xiaomi.png" width="80" height="80" style="padding: 10px;" />
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <!-- Oppo -->
+        <div class="col-lg-3 col-6">
+            <a href="@Url.Action("SanPhamTheoHang", "Home", new {idHang = 4})">
+                <div class="small-box">
+                    <div class="row align-items-center">
+                        <div class="col-8" style="text-align: center">
+                            <h3 style="color: forestgreen">Oppo</h3>
+                        </div>
+                        <div class="col-4">
+                            <img src="~/Libs/dist/img/Logo/Oppo.png" width="80" height="80" style="padding: 10px;" />
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+    @{ #endregion}
+    <!-- /.row -->
+    <div class="row g-4">
+        @foreach (var sp in Model)
+        {
+            <div class="col-md-3 col-sm-6">
+                <div class="wid-product text-center p-3 shadow d-flex justify-content-center align-items-center">
+                    <div class="mb-2">
+                        <img style="width: 250px; height: 250px;" class="img-product" src="@Url.Content(sp.Anh)" alt="Ảnh sản phẩm." />
+                    </div>
+                    <div class="row mb-2">
+                        <h4><b>@sp.TenSanPham</b></h4>
+                    </div>
+                    <div class="row mb-2">
+                        <p><b>@string.Format("{0:N0} đ", sp.Gia)</b></p>
+                    </div>
+                    <div>
+                        <a style="background-color: #C0EB6A !important; color: black; border: solid 1px rgb(200,200,200);" class="btn btn-success" href="@Url.Action("ChiTietSanPham", "SanPham", new {IdSP = sp.IdSanPham})">Mua hàng</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+</main>
